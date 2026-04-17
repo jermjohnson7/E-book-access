@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The AI Business Architect | JermTheConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C96A;
+      --gold-dim: rgba(201,168,76,0.15);
+      --bg: #080808;
+      --bg-card: #111111;
+      --bg-card2: #161616;
+      --text: #F0EDE8;
+      --text-muted: #888880;
+      --border: rgba(201,168,76,0.2);
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── UTILITY ─────────────────────────────── */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    .gold { color: var(--gold); }
+    .tag {
+      display: inline-block;
+      background: var(--gold-dim);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+    }
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 64px 0;
+    }
+
+    /* ─── HERO ─────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 7vw, 80px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      display: block;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 60%, #fff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      font-weight: 400;
+    }
+
+    .hero-sub strong { color: var(--text); font-weight: 600; }
+
+    .cta-group { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold);
+      color: #000;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.03em;
+      padding: 18px 40px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 40px rgba(201,168,76,0.25);
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 0 60px rgba(201,168,76,0.4);
+    }
+    .btn-primary svg { flex-shrink: 0; }
+
+    .hero-note {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 64px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      display: block;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 6px;
+    }
+
+    /* ─── SECTIONS ──────────────────────────────── */
+    section { padding: 80px 0; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-intro {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin-bottom: 48px;
+    }
+
+    /* ─── THE MAP (5 CATEGORIES) ───────────────── */
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .map-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .map-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .map-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .map-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .map-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .map-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .map-prompts {
+      font-size: 12px;
+      color: var(--gold);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .map-level {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.05);
+      color: var(--text-muted);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    /* ─── FRAMEWORK (HOW TO USE) ───────────────── */
+    .framework-steps { display: flex; flex-direction: column; gap: 0; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 24px;
+      padding: 36px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--gold-dim);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 800;
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .step-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .step-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .step-body {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ─── OUTCOMES ──────────────────────────────── */
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .outcome-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+    }
+
+    .outcome-icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .outcome-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .outcome-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ─── PROMPT REFINEMENT ─────────────────────── */
+    .refine-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px 40px;
+    }
+
+    .refine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 36px;
+    }
+
+    .refine-card {
+      border-left: 2px solid var(--gold);
+      padding-left: 20px;
+    }
+
+    .refine-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .refine-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ─── CODE EXAMPLE ──────────────────────────── */
+    .code-block {
+      background: #0e0e0e;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 24px 28px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #ccc;
+      margin: 24px 0;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block .var { color: var(--gold); font-weight: 600; }
+    .code-block .keyword { color: #7eb8f7; }
+
+    .code-label {
+      position: absolute;
+      top: 12px; right: 16px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ─── PRO TIPS ──────────────────────────────── */
+    .tips-list { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+
+    .tip {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--bg-card2);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+
+    .tip-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .tip-content h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .tip-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ─── BLIND SPOT ────────────────────────────── */
+    .blindspot {
+      background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, transparent 100%);
+      border: 1px solid var(--gold);
+      border-radius: 14px;
+      padding: 40px 36px;
+      margin-top: 64px;
+    }
+
+    .blindspot h3 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .blindspot p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ─── FINAL CTA ─────────────────────────────── */
+    .final-cta {
+      text-align: center;
+      padding: 100px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .final-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .final-cta p {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto 40px;
+    }
+
+    /* ─── FOOTER ────────────────────────────────── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ─── RESPONSIVE ────────────────────────────── */
+    @media (max-width: 600px) {
+      .refine-section { padding: 32px 24px; }
+      .step { grid-template-columns: 48px 1fr; gap: 16px; }
+      .hero-stats { gap: 32px; }
+      .blindspot { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <span class="tag">Jermaine Johnson · Grand Connect</span>
+    </div>
+
+    <h1>
+      The AI Business Architect
+      <span>From Idea to Empire</span>
+    </h1>
+
+    <p class="hero-sub">
+      <strong>50 High-Leverage AI Prompts</strong> engineered for entrepreneurs and startup founders
+      who are done theorizing and ready to build.
+    </p>
+
+    <div class="cta-group">
+      <a href="https://docs.google.com/document/d/1jBKDdCbQwSU1oHnMts3TEmDJNFBTPaoU/edit?usp=sharing&ouid=117957611152577016001&rtpof=true&sd=true" target="_blank" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+        Access the Full E-Book
+      </a>
+      <span class="hero-note">Opens in Google Drive · No download required</span>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">50</span>
+        <span class="stat-label">Precision Prompts</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">5</span>
+        <span class="stat-label">Battle Phases</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">4</span>
+        <span class="stat-label">Steps Per Prompt</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1</span>
+        <span class="stat-label">Decision System</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <hr class="divider" />
+
+    <!-- ═══════════════════════════════════════
+         THE MAP — 5 CATEGORIES
+    ═══════════════════════════════════════ -->
+    <section>
+      <p class="section-label">What's Inside</p>
+      <h2 class="section-title">The 5-Phase Roadmap<br/>From Raw Idea to Scaled Empire</h2>
+      <p class="section-intro">This isn't a random collection of prompts. It's a sequenced architecture — each phase builds on the last.</p>
+
+      <div class="map-grid">
+        <div class="map-card">
+          <p class="map-num">Phase 01</p>
+          <h3 class="map-title">The Blueprint</h3>
+          <p class="map-subtitle">Ideation & Market Theory</p>
+          <p class="map-prompts">Prompts 1 – 10</p>
+          <span class="map-level">Beginner-Friendly</span>
+        </div>
+        <div class="map-card">
+          <p class="map-num">Phase 02</p>
+          <h3 class="map-title">The Infrastructure</h3>
+          <p class="map-subtitle">Systems & Technical Build</p>
+          <p class="map-prompts">Prompts 11 – 20</p>
+          <span class="map-level">Intermediate</span>
+        </div>
+        <div class="map-card">
+          <p class="map-num">Phase 03</p>
+          <h3 class="map-title">The Engine</h3>
+          <p class="map-subtitle">Content, Marketing & Sales</p>
+          <p class="map-prompts">Prompts 21 – 30</p>
+          <span class="map-level">Intermediate · Advanced</span>
+        </div>
+        <div class="map-card">
+          <p class="map-num">Phase 04</p>
+          <h3 class="map-title">The Status</h3>
+          <p class="map-subtitle">Branding & Identity Mastery</p>
+          <p class="map-prompts">Prompts 31 – 40</p>
+          <span class="map-level">Advanced</span>
+        </div>
+        <div class="map-card">
+          <p class="map-num">Phase 05</p>
+          <h3 class="map-title">The Monopoly</h3>
+          <p class="map-subtitle">Scaling & Legacy</p>
+          <p class="map-prompts">Prompts 41 – 50</p>
+          <span class="map-level">Advanced</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ═══════════════════════════════════════
+         HOW TO USE
+    ═══════════════════════════════════════ -->
+    <section>
+      <p class="section-label">How to Use This Book</p>
+      <h2 class="section-title">The High-Leverage<br/>Framework — 4 Moves Per Prompt</h2>
+      <p class="section-intro">Every single prompt is built on the same architecture. Learn this once and you'll extract max value from all 50.</p>
+
+      <div class="framework-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <p class="step-label">The "Why"</p>
+            <h3 class="step-title">Strategy / Context</h3>
+            <p class="step-body">Before you touch the prompt, read the context block. It tells you what business problem you're solving, what order to use the output in, what to prepare in advance, and what AI persona to activate. Skip this and you're flying blind.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <p class="step-label">The "What"</p>
+            <h3 class="step-title">Prime Prompt</h3>
+            <p class="step-body">Copy. Paste. Replace every <strong>[BRACKETED VARIABLE]</strong> with your actual business context. The more specific your inputs, the more surgical the output. Generic inputs = generic outputs. That's on you, not the prompt.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <p class="step-label">The "Better"</p>
+            <h3 class="step-title">Refinement Prompt</h3>
+            <p class="step-body">After you get your first output, run the refinement prompt. It stress-tests the first answer, challenges weak assumptions, or digs one layer deeper into execution. This is where most people stop — and where you start pulling ahead.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div>
+            <p class="step-label">The "Next Step"</p>
+            <h3 class="step-title">Implementation</h3>
+            <p class="step-body">One concrete action you take today with the output. Not tomorrow. Today. This is the discipline that separates builders from hoarders of information. Information without implementation is just expensive entertainment.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="blindspot" style="margin-top:40px;">
+        <span class="tag" style="margin-bottom:14px;display:inline-block;">Where to Start</span>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;">Early-stage? Start at Prompt 1.</h3>
+        <p>Work through the categories in order — they're sequenced intentionally. Already running a business? Jump directly to the category that matches your current bottleneck. You don't have to read this front to back to win. You have to use it.</p>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ═══════════════════════════════════════
+         WHAT YOU'LL GET
+    ═══════════════════════════════════════ -->
+    <section>
+      <p class="section-label">What You'll Be Able to Do</p>
+      <h2 class="section-title">Concrete Outcomes<br/>Not Motivation. Results.</h2>
+      <p class="section-intro">By the time you work through this system, here's what you'll have built.</p>
+
+      <div class="outcomes-grid">
+        <div class="outcome-card">
+          <span class="outcome-icon">🎯</span>
+          <h3 class="outcome-title">Validate Before You Build</h3>
+          <p class="outcome-body">Run a Pre-Launch Risk Audit on any idea before spending a dollar. Know the kill shots before the market does.</p>
+        </div>
+        <div class="outcome-card">
+          <span class="outcome-icon">⚙️</span>
+          <h3 class="outcome-title">Automate Your Operations</h3>
+          <p class="outcome-body">Map your workflow gaps and generate AI-first automation blueprints for the back-end of your business.</p>
+        </div>
+        <div class="outcome-card">
+          <span class="outcome-icon">📣</span>
+          <h3 class="outcome-title">Build a Content Engine</h3>
+          <p class="outcome-body">Generate authority content, sales copy, and brand messaging that's positioned — not just posted.</p>
+        </div>
+        <div class="outcome-card">
+          <span class="outcome-icon">👑</span>
+          <h3 class="outcome-title">Engineer Your Brand Identity</h3>
+          <p class="outcome-body">Use psychology-based positioning frameworks to build brand perception — not just aesthetics.</p>
+        </div>
+        <div class="outcome-card">
+          <span class="outcome-icon">📈</span>
+          <h3 class="outcome-title">Build Scalable Systems</h3>
+          <p class="outcome-body">Create the architecture for a sellable, scalable asset — not just a hustle that collapses without you.</p>
+        </div>
+        <div class="outcome-card">
+          <span class="outcome-icon">💡</span>
+          <h3 class="outcome-title">Think Like a Strategist</h3>
+          <p class="outcome-body">Internalize frameworks for evaluating every business decision against leverage, legacy, and long-term value.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ═══════════════════════════════════════
+         PROMPT REFINEMENT
+    ═══════════════════════════════════════ -->
+    <section>
+      <div class="refine-section">
+        <p class="section-label">Getting Better Over Time</p>
+        <h2 class="section-title" style="max-width:600px;">How to Level Up<br/>Your Prompt Game</h2>
+        <p style="font-size:16px;color:var(--text-muted);max-width:580px;">The prompt is just the input. The quality of what you feed it determines everything. Here's how to sharpen your inputs so the outputs actually move the needle.</p>
+
+        <div class="refine-grid">
+          <div class="refine-card">
+            <h4>Replace Every Variable — No Exceptions</h4>
+            <p>The [BRACKETS] aren't decoration. They're the steering wheel. Replace them with your actual industry, revenue model, and audience. Lazy inputs produce outputs that belong to nobody.</p>
+          </div>
+          <div class="refine-card">
+            <h4>Add Context in Layers</h4>
+            <p>Start with the Prime Prompt. Then feed the output back in with more context — your previous results, constraints, competitors. AI compounds when you treat it like a conversation, not a vending machine.</p>
+          </div>
+          <div class="refine-card">
+            <h4>Always Run the Refinement</h4>
+            <p>The refinement prompt is the stress test. It's designed to break weak answers. If the first output feels too agreeable, the refinement will expose the cracks — and that's where the real insight lives.</p>
+          </div>
+          <div class="refine-card">
+            <h4>Save Your Best Outputs</h4>
+            <p>Build a personal prompt library in Notion or NotebookLM. Track what context produced the best results. Over time, you'll have a custom AI system tuned specifically to your business.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:40px;">
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;">Example: Weak vs. Strong Variable Replacement</p>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;flex-wrap:wrap;">
+            <div>
+              <p style="font-size:12px;color:#c0392b;font-weight:700;margin-bottom:8px;">❌ WEAK INPUT</p>
+              <div class="code-block" style="font-size:12px;padding:18px 20px;">
+                My industry: <span class="var">business</span><br/>
+                My skills: <span class="var">marketing, social media</span><br/>
+                Income goal: <span class="var">make money</span><br/>
+                Time available: <span class="var">some hours</span>
+              </div>
+            </div>
+            <div>
+              <p style="font-size:12px;color:#27ae60;font-weight:700;margin-bottom:8px;">✅ STRONG INPUT</p>
+              <div class="code-block" style="font-size:12px;padding:18px 20px;">
+                My industry: <span class="var">B2B SaaS · Legal Tech</span><br/>
+                My skills: <span class="var">cold outreach, email copy,<br/>CRM systems, LinkedIn</span><br/>
+                Income goal: <span class="var">$8,000/mo in 90 days</span><br/>
+                Time available: <span class="var">15 hrs/week</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ═══════════════════════════════════════
+         PRO TIPS
+    ═══════════════════════════════════════ -->
+    <section>
+      <p class="section-label">Pro Tips</p>
+      <h2 class="section-title">How Most People<br/>Will Use This Wrong</h2>
+      <p class="section-intro">Don't be most people.</p>
+
+      <div class="tips-list">
+        <div class="tip">
+          <span class="tip-icon">⚡</span>
+          <div class="tip-content">
+            <h4>Use One Tool Consistently</h4>
+            <p>Pick your AI model — ChatGPT-4o, Claude, Gemini — and stay with it for the entire book. Models have different tones and output styles. Switching mid-session creates inconsistency in your outputs. Master one, then cross-train.</p>
+          </div>
+        </div>
+        <div class="tip">
+          <span class="tip-icon">🧠</span>
+          <div class="tip-content">
+            <h4>Set the Persona First</h4>
+            <p>Every prompt specifies an AI persona — "Act as a Cynical VC," "Act as a Market Research Analyst." This isn't optional flavor text. The persona reshapes the entire response. A strategist and a motivational coach will give you wildly different answers. Run the right persona every time.</p>
+          </div>
+        </div>
+        <div class="tip">
+          <span class="tip-icon">📂</span>
+          <div class="tip-content">
+            <h4>Build a Business Knowledge Base</h4>
+            <p>The book recommends Notion or NotebookLM repeatedly — and for good reason. Your outputs need a home. Save your Identity Audit, your Problem Statement, your Brand Framework. They feed each other. A business without documentation is just a series of expensive experiments.</p>
+          </div>
+        </div>
+        <div class="tip">
+          <span class="tip-icon">🔁</span>
+          <div class="tip-content">
+            <h4>Re-Run Prompts as Your Business Evolves</h4>
+            <p>These prompts aren't one-time exercises. Run Prompt 1 again in 6 months with your updated skill set and revenue history. The inputs change, the outputs sharpen. This book has a longer shelf life than most courses you've bought.</p>
+          </div>
+        </div>
+        <div class="tip">
+          <span class="tip-icon">🚫</span>
+          <div class="tip-content">
+            <h4>Don't Skip the Implementation Step</h4>
+            <p>Every prompt ends with one concrete action. Most people will read it, nod, and move on. The ones who take the action — even the small one — are the ones who compound. The gap between knowledge and results is always execution.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         BLIND SPOT CHECK
+    ═══════════════════════════════════════ -->
+    <div class="blindspot" style="margin-bottom:80px;">
+      <span class="tag" style="margin-bottom:16px;display:inline-block;">Blind Spot Check</span>
+      <h3>The Book Won't Build Anything. You Will.</h3>
+      <p style="margin-top:10px;">No prompt, framework, or system substitutes for execution. This book is a force multiplier — but only for someone already moving. The highest-leverage next step is simple: open the book, pick the phase that matches where your business actually is right now, and run one prompt today. Not all 50. One. That's the whole game.</p>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       FINAL CTA
+  ═══════════════════════════════════════ -->
+  <section class="final-cta">
+    <div class="container">
+      <p class="tag" style="margin-bottom:20px;">You're Already Here. Finish the Move.</p>
+      <h2>Stop Reading About<br/>Building. Start.</h2>
+      <p>The blueprint is in your hands. Now run it.</p>
+      <a href="https://docs.google.com/document/d/1jBKDdCbQwSU1oHnMts3TEmDJNFBTPaoU/edit?usp=sharing&ouid=117957611152577016001&rtpof=true&sd=true" target="_blank" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+        Open the E-Book Now
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 <a href="#" target="_blank">Grand Connect</a> · The AI Business Architect: From Idea to Empire</p>
+      <p style="margin-top:8px;font-size:12px;">Jermaine Johnson · <a href="mailto:jermjohnson7@gmail.com">jermjohnson7@gmail.com</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
